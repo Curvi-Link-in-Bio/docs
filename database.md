@@ -195,6 +195,22 @@ CREATE INDEX idx_links_user_id ON links (user_id);
 CREATE INDEX idx_link_clicks_created_at ON link_clicks (created_at);
 ```
 
+## Explicação das tabelas
+
+- **users**: Tabela que armazena contas das criadoras e configurações de perfil. Campos principais: `email` (único), `password_hash` (bcrypt/argon2), `username` (único), `display_name`, `bio`, `avatar_url`, preferências de tema (`theme`, `button_color`, `background_*`), `plan` (ex.: free, pro), `payment_method`, `categories` (text[] ou `jsonb`), `created_at` e `updated_at`. Observações: proteger `password_hash`, indexar `lower(username)` para buscas públicas, e usar triggers ou aplicação para atualizar `updated_at` quando necessário.
+
+- **links**: Links públicos por usuário. Guarda `user_id` (FK com `ON DELETE CASCADE`), `title`, `url`, `active`, contador `clicks` (leitura rápida), `category`, `position` para ordenação, e timestamps. Atualize `clicks` com operação atômica (`UPDATE ... SET clicks = clicks + 1 WHERE id = $1 RETURNING clicks`). Considere índices para consultas por usuário e ordenação.
+
+- **link_clicks**: Registro opcional de cada clique para analytics. Contém `link_id`, `referrer`, `user_agent` e `created_at`. Útil para análises temporais e origem de tráfego; porém pode crescer muito rápido — planeje retenção/arquivamento ou agregação periódica.
+
+- **reviews**: Avaliações públicas da plataforma. Campos: `name`, `rating` (1–5 com `CHECK`), `comment` e `created_at`. Use moderação/validação para evitar spam/abuso antes de publicar.
+
+- **pending_checkouts**: Registros de checkouts iniciados mas não finalizados. Contém `user_id`, `plan`, `status` (ex.: `pending`, `completed`, `cancelled`), `metadata` (`jsonb`) e `created_at`. Serve para reconciliar transações com provedores de pagamento e evitar cobranças duplicadas.
+
+- **payments**: Histórico de pagamentos. Contém `user_id` (pode ser `NULL`), `provider` (ex.: Stripe), `amount`, `currency`, `status`, `provider_reference` e `metadata`. Importante para conciliação financeira, auditoria e reembolsos.
+
+- **uploads**: Metadados de arquivos armazenados externamente (avatares, fundos, assets). Contém `user_id`, `url`, `kind` (ex.: `avatar`, `background`), `metadata` (`jsonb`) e `created_at`. Recomenda-se usar storage externo (S3/GCS) e armazenar apenas metadados; gerencie expiração e permissões de acesso.
+
 ---
 
 ## Observações importantes sobre o modelo
