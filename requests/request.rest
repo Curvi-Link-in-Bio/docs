@@ -1,0 +1,125 @@
+@base_url = http://localhost:3000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZDQyZTAxZi04YTM3LTQ3MWItYTQ3OC0wMzkxYTI4MzFkZGMiLCJlbWFpbCI6ImlhZ28uYWNwZXJlaXJhQGdtYWlsLmNvbSIsInBsYW4iOiJmcmVlIiwiaWF0IjoxNzkwOTEwNzU0LCJleHAiOjE3OTA5OTcxNTR9.5fMV-DF-IR8adkwV1B6Cw1gosUMXWk2X5DTYmBqt70U
+
+### Health Check
+GET {{base_url}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Auth - Sign Up
+POST {{base_url}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "user name 3",
+    "email": "user3@example.com",
+    "password": "Senha@123"
+}
+
+### Auth - Sign In
+POST {{base_url}}/auth/signin
+Content-Type: application/json
+
+{
+    "email": "iago.acpereira@gmail.com",
+    "password": "Senha@123"
+}
+
+### Auth - Reset Password
+POST {{base_url}}/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "iago.acpereira@gmail.com"
+}
+
+### Auth - Reset Password Confirm
+POST {{base_url}}/auth/reset-password-confirm
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "email": "iago.acpereira@gmail.com",
+    "newPassword": "Senha@123"
+}
+
+### User - Me
+GET {{base_url}}/user/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### User - Find One By Id
+GET {{base_url}}/user/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### User - Update One By Id
+PATCH {{base_url}}/user/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "plan": "free"
+}
+
+### User - Find One By Username
+GET {{base_url}}/user/public/iago
+Content-Type: application/json
+
+### Links - Find Links By User Id
+GET {{base_url}}/link/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Links - Create Links By User Id
+POST {{base_url}}/link/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "My Link",
+    "url": "https://example.com",
+    "active": true,
+    "category": "General",
+    "position": 0
+}
+
+### Links - Update Link By Id And User Id
+PATCH {{base_url}}/link/a18c2dad-df73-4d04-9099-87c757f095dd/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "position": 1
+}
+
+### Links - Delete Link By Id And User Id
+DELETE {{base_url}}/link/f4f30ae3-2539-4619-b287-1432c50c8833/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Links - Delete Link By Id And User Id
+DELETE {{base_url}}/link/f4f30ae3-2539-4619-b287-1432c50c8833/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Links - Reorder Links By User Id
+POST {{base_url}}/link/reorder/by/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+[
+    "My Link Updated 1",
+    "My Link Updated 2",
+    "My Link Updated 3"
+]
+
+### Link Clicks - Add Click By Username And Link Id
+POST {{base_url}}/link-click/user/iago/links/a18c2dad-df73-4d04-9099-87c757f095dd/click
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Link Clicks - Get Metrics by User Id
+GET {{base_url}}/link-click/user/e1b7bc4d-757e-4ff7-a0f1-45f662ee87d1/metrics
+Content-Type: application/json
+Authorization: Bearer {{token}}

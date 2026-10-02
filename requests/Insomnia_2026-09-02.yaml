@@ -1,0 +1,354 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1775567174707
+  modified: 1775567174707
+  description: ""
+collection:
+  - url: "{{ _.base_url }}/"
+    name: Health Check
+    meta:
+      id: req_80dccd53fee0458fb972529117f32d1d
+      created: 1788380762541
+      modified: 1788384467684
+      isPrivate: false
+      description: ""
+      sortKey: -1787772984688
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+      - name: Authorization
+        value: Bearer {{ _.token }}
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: PagBank
+    meta:
+      id: fld_e1fdc01e8732475188c450abc28d04e3
+      created: 1787087963677
+      modified: 1787087963677
+      sortKey: -1787087963678
+      description: ""
+    children:
+      - url: https://sandbox.api.pagseguro.com/checkouts
+        name: Criar checkout
+        meta:
+          id: req_63ad1765349049388bfa9bde904499d4
+          created: 1787087968167
+          modified: 1787142456537
+          isPrivate: false
+          description: ""
+          sortKey: -1787087968168
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "customer": {
+                "phone": {
+                  "country": "+55",
+                  "area": "27",
+                  "number": "999999999"
+                },
+                "name": "João teste",
+                "email": "joao@teste.com",
+                "tax_id": "12345678909"
+              },
+              "shipping": {
+            		"type": "FREE",
+                "address": {
+                  "street": "Faria Lima",
+                  "number": "1384",
+                  "complement": "5 andar",
+                  "locality": "Pinheiros",
+                  "city": "São Paulo",
+                  "region_code": "SP",
+                  "country": "BRA",
+                  "postal_code": "01452002"
+                },
+                "service_type": "SEDEX",
+                "address_modifiable": false
+              },
+              "recurrence_plan": {
+                "interval": {
+                  "unit": "MONTH"
+                },
+                "name": "Curvi - Assinatura PRO"
+              },
+              "reference_id": "Curvi - Assinatura PRO",
+              "expiration_date": "2026-08-19T23:59:59-03:00",
+              "items": [
+                {
+                  "reference_id": "Curvi - Assinatura PRO",
+                  "name": "Curvi - Assinatura PRO",
+                  "description": "Curvi - Assinatura PRO",
+                  "quantity": 1,
+                  "unit_amount": 1999,
+                  "image_url": "https://img.magnific.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg?semt=ais_hybrid&w=740&q=80"
+                }
+              ],
+              "payment_methods": [
+                {
+                  "type": "CREDIT_CARD"
+                }
+              ],
+              "payment_methods_configs": [
+                {
+                  "type": "CREDIT_CARD",
+                  "config_options": [
+                    {
+                      "option": "INSTALLMENTS_LIMIT",
+                      "value": "1"
+                    }
+                  ]
+                }
+              ],
+              "soft_descriptor": "Curvi - Plano Pro",
+              "redirect_url": "http://google.com",
+              "return_url": "https://google.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: https://sandbox.api.pagseguro.com/checkouts/ORDE_1EEE1962-2195-4343-AC08-6A33DC09CB60
+        name: Consultar checkout
+        meta:
+          id: req_4343027eb2554f76a25736954bfa4f32
+          created: 1787141480716
+          modified: 1787141745574
+          isPrivate: false
+          description: ""
+          sortKey: -1787141480716
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: https://sandbox.api.assinaturas.pagseguro.com/plans/PLAN_D3A89613-96C6-47A7-979C-45CBA87F8059
+        name: Consultar plano
+        meta:
+          id: req_8c2784a65d3c4b34b473c1a78818f6f1
+          created: 1787160511322
+          modified: 1787160745682
+          isPrivate: false
+          description: ""
+          sortKey: -1787087968068
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: https://sandbox.api.assinaturas.pagseguro.com/plans/PLAN_D3A89613-96C6-47A7-979C-45CBA87F8059/inactivate
+        name: Inativar plano
+        meta:
+          id: req_2549298e14df4ba18f7e4d98bd26a9bf
+          created: 1787160803559
+          modified: 1787160839699
+          isPrivate: false
+          description: ""
+          sortKey: -1787087968018
+        method: PUT
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: https://sandbox.api.assinaturas.pagseguro.com/plans
+        name: Listar planos
+        meta:
+          id: req_70f9ff50075244f5a714766838542e82
+          created: 1787161475919
+          modified: 1787161484862
+          isPrivate: false
+          description: ""
+          sortKey: -1787087968043
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_0bfd42a1800645d899f35be441b0000a
+      created: 1787772998032
+      modified: 1788384471481
+      sortKey: -1787772984638
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/auth/signup"
+        name: Signup
+        meta:
+          id: req_2ce36136ec894ccda840b6c3b679e419
+          created: 1787773007878
+          modified: 1788303271916
+          isPrivate: false
+          description: ""
+          sortKey: -1787773007878
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "email9@email.com",
+            	"password": "Password@123",
+            	"username": "user name9"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/auth/signin"
+        name: Signin
+        meta:
+          id: req_1be6d3169c80493f83a82d490fa6c62c
+          created: 1788303296771
+          modified: 1788303336534
+          isPrivate: false
+          description: ""
+          sortKey: -1787457244297
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "email9@email.com",
+            	"password": "Password@123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+          - name: Authorization
+            value: Bearer {{ _.token }}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1775567214741
+    modified: 1787161490107
+  cookies:
+    - id: a8951431-b026-4794-af32-054337d11912
+      key: __cf_bm
+      value: Yc89gmn5Pyn_EUkOTc_FLkiAqCGUNr9YoVQG8YXaNhM-1787161486.957729-1.0.1.1-41O3avj53yY_TxLjoFrIXZsXTBDVCRePKfo72IYJh3KpjS9i6zYc5VDCupZGmrsQA9tu6d9shMYnpoSaxkwv1nGi2qMfmX2MAyIXyaZxLk1AMbwuf5rYiVy8RMnz1BPu
+      domain: pagseguro.com
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: false
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1775567214651
+    modified: 1788381902703
+    isPrivate: false
+  data:
+    base_url: http://localhost:3000/api
+    token: ""

@@ -23,26 +23,26 @@ Observação sobre autenticação: recomenda-se usar cookies httpOnly (sessão) 
   - Response 204.
 
 - POST /api/auth/reset-password
-  - Body: `{ "email": "...", "newPassword": "..." }`
-  - Response 200: `{ "ok": true }` (em produção: enviar e-mail com token/fluxo seguro)
+  - Body: `{ "email": "..." }`
+  - Response 202: `{ "ok": true }` 
 
 ---
 
 ## Usuários / Perfil
 
-- GET /api/users/me
+- GET /api/user/me
   - Auth required.
   - Response: usuário completo incluindo `links` e `categories`.
 
-- GET /api/users/:id
+- GET /api/user/:id
   - Auth required (ou admin) — retorna perfil privado.
 
-- PATCH /api/users/:id
+- PATCH /api/user/:id
   - Auth required (usuário dono)
   - Body: Partial das propriedades permitidas (displayName, bio, avatar_url, theme, button_color, background_color, background_image_url, categories)
   - Response 200: usuário atualizado
 
-- GET /api/public/:username
+- GET /api/user/public/:username
   - Public route (sem auth)
   - Response: `{ username, displayName, bio, avatar_url, button_color, background_color, background_image_url, plan, links: [...] }`
   - Usado para renderizar `/$username` (página pública). Deve ser rápido e cacheável.
@@ -51,25 +51,25 @@ Observação sobre autenticação: recomenda-se usar cookies httpOnly (sessão) 
 
 ## Links (CRUD)
 
-- GET /api/users/:userId/links
+- GET /api/link/by/:userId
   - Auth required / owner
   - Response: `[{ id, title, url, active, clicks, category, position }]`
 
-- POST /api/users/:userId/links
+- POST /api/link/by/:userId
   - Auth required
   - Body: `{ title, url, category, active? }`
   - Response 201: novo link
 
-- PATCH /api/users/:userId/links/:linkId
+- PATCH /api/link/:linkId/by/:userId
   - Auth required
   - Body: Partial do link (title, url, active, category, position)
   - Response 200: link atualizado
 
-- DELETE /api/users/:userId/links/:linkId
+- DELETE /api/links/:linkId/by/:userId
   - Auth required
   - Response 204
 
-- POST /api/users/:userId/links/reorder
+- POST /api/links/reorder/by/:userId
   - Auth required
   - Body: `{ order: ["linkId1","linkId2", ...] }` — atualiza `position` em lote
   - Response 200
@@ -78,12 +78,12 @@ Observação sobre autenticação: recomenda-se usar cookies httpOnly (sessão) 
 
 ## Cliques / Métricas
 
-- POST /api/:username/links/:linkId/click
+- POST /api/link-click/user/:username/links/:linkId/click
   - Public route (chamada ao clicar em link na página pública). Pode ser chamada pelo frontend ou redirecionada via servidor.
   - Behavior: incrementa `links.clicks` atomically e opcionalmente grava em `link_clicks` para histórico.
   - Response 204 (ou redirect para `url`).
 
-- GET /api/users/:userId/metrics
+- GET /api/link-click/user/:userId/metrics
   - Auth required
   - Query params (opcional): `from`, `to`, `group=day|week|month`
   - Response: métricas agregadas para painel (totais, por link, por categoria)
